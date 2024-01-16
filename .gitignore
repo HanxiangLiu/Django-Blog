@@ -1,0 +1,5 @@
+.vscode/
+__pycache__/
+Peekpa/__pycache__/
+myweb/__pycache__/
+learn/migrations
