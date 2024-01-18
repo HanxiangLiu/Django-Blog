@@ -50,6 +50,7 @@
         <!-- Post Tab -->
         {% url 'cms:post_manage_view' as post_manage_view %}
         {% url 'cms:post_publish_view' as post_publish_view %}
+        {% url 'cms:post_edit_view' as post_edit_view %}
         <li
           class="nav-item has-treeview {% if request.path == post_manage_view or request.path == post_publish_view %}menu-open{% endif %}">
           <a href="{{ post_manage_view }}"

@@ -6,7 +6,8 @@ from django.views.generic import View
 from django.http import HttpResponse
 
 from apps.cms.forms import PostAddForm, PostEditForm
-from apps.post.models import Post
+from apps.bloguser.models import User
+from apps.post.models import Category, Post
 
 
 class PostView(View):
@@ -93,12 +94,15 @@ class PostView(View):
 
 class PostEditView(View):
     def get(self, request):
-        post_id = request.GET.get("post_id")
+        post_id = request.GET.get('post_id')
         post = Post.objects.get(pk=post_id)
         context = {
-            "item_data": post,
+            'item_data': post,
+            'list_data_category': Category.objects.all(),
+            'list_data_user': User.objects.all(),
+            'list_data_status': Post.STATUS_ITEMS,
         }
-        return render(request, "cms/post/publish.html", context=context)
+        return render(request, 'cms/post/publish.html', context=context)
 
 
 class PostDeleteView(View):
