@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from apps.post.models import Category
+from apps.post.models import Category, Post
 
 
 def cms_login(request):
@@ -10,6 +10,9 @@ def cms_dashboard(request):
     return render(request, "cms/dashboard/home.html")
 
 
+'''
+Category manage view
+'''
 def category_manage_view(request):
     context = {
         "list_data": Category.objects.all()
@@ -19,3 +22,18 @@ def category_manage_view(request):
 
 def category_publish_view(request):
     return render(request, "cms/category/publish.html")
+
+
+'''
+Post manage view
+'''
+def post_manage_view(request):
+    posts = Post.objects.all()
+    context = {
+        "list_data": posts,
+    }
+    return render(request, 'cms/post/manage.html', context=context)
+
+
+def post_publish_view(request):
+    return render(request, 'cms/post/publish.html')

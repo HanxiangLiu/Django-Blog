@@ -12,4 +12,6 @@ urlpatterns = [
     path("dashboard/category/add", CategoryView.as_view(), name="category_add"),
     path("dashboard/category/edit", CategoryEditView.as_view(), name="category_edit_view"),
     path("dashboard/category/delete", CategoryDeleteView.as_view(), name="category_delete"),
+    path("dashboard/post/manage", views.post_manage_view, name="post_manage_view"),
+    path("dashboard/post/publish", views.post_publish_view, name="post_publish_view"),
 ]

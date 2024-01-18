@@ -8,6 +8,7 @@
   <div class="sidebar">
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Console Tab -->
         {% url 'cms:dashboard' as cms_home_page %}
         <li class="nav-item">
           <a href="{{ cms_home_page }}" class="nav-link {% if request.path == cms_home_page %}active{% endif %}">
@@ -15,6 +16,7 @@
             <p>控制台</p>
           </a>
         </li>
+        <!-- Category Tab -->
         {% url 'cms:category_manage_view' as category_manage_view %}
         {% url 'cms:category_publish_view' as category_publish_view %}
         {% url 'cms:category_edit_view' as category_edit_view %}
@@ -41,6 +43,36 @@
                 class="nav-link {% if request.path == category_publish_view %}active{% endif %}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>标签发布</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- Post Tab -->
+        {% url 'cms:post_manage_view' as post_manage_view %}
+        {% url 'cms:post_publish_view' as post_publish_view %}
+        <li
+          class="nav-item has-treeview {% if request.path == post_manage_view or request.path == post_publish_view %}menu-open{% endif %}">
+          <a href="{{ post_manage_view }}"
+            class="nav-link {% if request.path == post_manage_view or request.path == post_publish_view %}active{% endif %}">
+            <i class="nav-icon far fa-copy"></i>
+            <p>
+              文章管理
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{ post_manage_view }}"
+                class="nav-link {% if request.path == post_manage_view %}active{% endif %}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>文章列表</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ post_publish_view }}"
+                class="nav-link {% if request.path == post_publish_view %}active{% endif %}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>文章发布</p>
               </a>
             </li>
           </ul>
