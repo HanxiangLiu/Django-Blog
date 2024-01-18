@@ -1,9 +1,142 @@
 {% extends 'cms/base/cms_base.html' %}
 
 {% block title %}
-    Post Publish
+Post Publish
 {% endblock %}
 
 {% block content %}
-<h1>This is Post Publish</h1>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row d-flex justify-content-center pt-4">
+            <div class="col-sm-11">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">文章发布</h3>
+                    </div>
+                    <form class="form-horizontal" action="{% url 'cms:post_add' %}" method="post">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="title" class="">Title</label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="title" 
+                                    name="title" 
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label for="description" class="">Description</label>
+                                <textarea 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="description"
+                                    name="description"
+                                ></textarea>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="thumbnail" class="">Thumbnail</label>
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            id="thumbnail" 
+                                            name="thumbnail" 
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="author" class="">Author</label>
+                                        <select name="author" id="author" class="custom-select">
+                                            {% for item in list_data_user %}
+                                            <option value="{{ item.uid }}">{{ item.username }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div> 
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="status" class="">Status</label>
+                                        <select name="status" id="status" class="custom-select">
+                                            {% for item in list_data_status %}
+                                            <option value="{{ item.0 }}">{{ item.1 }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="time_id" class="">Time ID</label>
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            id="time_id" 
+                                            name="time_id" 
+                                            readonly 
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="priority" class="">Priority</label>
+                                        <input 
+                                            type="number" 
+                                            class="form-control" 
+                                            id="priority" 
+                                            name="priority"
+                                            value="0" 
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="is_hot" class="">Is Hot</label>
+                                        <select name="is_hot" id="is_hot" class="custom-select">
+                                            <option value="True">Yes</option>
+                                            <option value="False">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="category" class="">Category</label>
+                                        <select name="category" id="category" class="custom-select">
+                                            <option value="">Choose...</option>
+                                            {% for item in list_data_category %}
+                                            <option value="{{ item.id }}">{{ item.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>                                  
+                            </div>
+                            <div class="form-group">
+                                <label for="content" class="">Content</label>
+                                <textarea 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="content" 
+                                    name="content"
+                                    rows="10"
+                                ></textarea>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary" name="submit">
+                                提交
+                            </button>
+                            <button type="submit" class="btn btn-danger float-right" name="back">
+                                返回
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
