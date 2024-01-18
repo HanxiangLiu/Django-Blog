@@ -8,4 +8,4 @@ def cms_login(request):
 
 
 def cms_dashboard(request):
-    return render(request, 'cms/dashboard.html')
+    return render(request, 'cms/dashboard/home.html')

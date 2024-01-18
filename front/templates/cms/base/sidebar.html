@@ -1,0 +1,34 @@
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <a href="{% url 'cms:dashboard' %}" class="brand-link">
+      <img
+        src="{% static 'image/cms_logo.png' %}"
+        class="brand-image img-circle elevation-3"
+        style="opacity: .8"
+      />
+      <span class="brand-text font-weight-light">Peekpa 管理系统</span>
+    </a>
+  
+    <div class="sidebar">
+      <nav class="mt-2">
+        <ul
+          class="nav nav-pills nav-sidebar flex-column"
+          data-widget="treeview"
+          role="menu"
+          data-accordion="false"
+        >
+          {% url 'cms:dashboard' as cms_home_page %}
+          <li class="nav-item">
+            <a
+              href="{{ cms_home_page }}"
+              class="nav-link {% if request.path == cms_home_page %}active{% endif %}"
+            >
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>中控台</p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </aside>
+  
