@@ -32,6 +32,7 @@ def post_manage_view(request):
     posts = Post.objects.all()
     context = {
         "list_data": posts,
+        'list_data_status': Post.STATUS_ITEMS
     }
     return render(request, 'cms/post/manage.html', context=context)
 
