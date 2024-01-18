@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from apps.post.models import Category, Post
 from apps.bloguser.models import User
+from utils.paginator_helper import get_paginator, get_pagination_data
 
 
 def cms_login(request):
@@ -29,11 +30,15 @@ def category_publish_view(request):
 Post manage view
 '''
 def post_manage_view(request):
+    page = int(request.GET.get('p', 1))
     posts = Post.objects.all()
+    paginator = get_paginator(posts)
+    page_obj = paginator.page(page)
     context = {
-        "list_data": posts,
+        "list_data": page_obj.object_list,
         'list_data_status': Post.STATUS_ITEMS
     }
+    context.update(get_pagination_data(paginator, page_obj))
     return render(request, 'cms/post/manage.html', context=context)
 
 
