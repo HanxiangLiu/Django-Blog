@@ -8,6 +8,7 @@
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             {% url 'post:index' as index %}
             {% url 'cms:dashboard' as cms %}
+            {% url 'post:post_list' as post_list %}
             <li class="nav-item mr-4">
                 <a
                     class="nav-link {% if request.path == index %}active{% endif %}"
@@ -16,7 +17,11 @@
                 >
             </li>
             <li class="nav-item mr-4">
-                <a class="nav-link" href="#">文章</a>
+                <a
+                    class="nav-link {% if request.path == post_list %}active{% endif %}"
+                    href="{{ post_list }}"
+                    >文章</a
+                >
             </li>
             <li class="nav-item mr-4">
                 <a
