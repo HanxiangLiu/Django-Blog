@@ -1,32 +1,120 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base/front_base.html' %}
 
-<head>
-    <meta charset="UTF-8" />
-    <title>Title</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+{% block title %}
+Peekpa
+{% endblock %}
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
-</head>
+{% block content %}
+<div class="container mt-4 mb-4">
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Big Highlight Pic -->
+            <div class="row" style="height: 230px;background-color: white">
+                <div class="col-md-7 p-0 h-100">
+                    <a href="#" class="w-100 h-100">
+                        <img class="w-100 h-100 bg-danger" />
+                    </a>
+                </div>
 
-<body>
-    <h1>Welcome to Peekpa</h1>
+                <div class="col-md-5">
+                    <p class="h5 mt-3 border-bottom mb-0 pb-2">
+                        <a href="#" class="text-decoration-none text-dark" style="">大焦点图推荐位置标题</a>
+                    </p>
+                    <div class="d-flex flex-row justify-content-between mt-2">
+                        <p class="font-weight-light small pl-1 ">PeekpaAdmin</p>
+                        <p class="font-weight-light small pr-1">2021-01-11</p>
+                    </div>
+                    <p class="small" style="font-size: 95%;">
+                        这里是描述位置，在这里可以简单概括文章内容
+                    </p>
+                </div>
+            </div>
+            <!-- Small Hightlight Pic -->
+            <div class="row mt-2 justify-content-between" style="height: 130px;">
+                <div class="col-sm-4 pl-0 pr-1 position-relative h-100">
+                    <a href="#" class="w-100 h-100">
+                        <img class="w-100 h-100 bg-danger" />
+                        <div class="position-absolute mr-1" style="bottom:0;background-color: rgba(58,58,58,0.9)">
+                            <p class="small m-1 text-light">小焦点图标题一</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-4 pl-1 pr-1 position-relative h-100">
+                    <a href="#" class="w-100 h-100">
+                        <img class="w-100 h-100 bg-danger" />
+                        <div class="position-absolute mr-1" style="bottom:0;background-color: rgba(58,58,58,0.9)">
+                            <p class="small m-1 text-light">
+                                小焦点图标题二超长位置测试小焦点图标题二超长位置测试
+                            </p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-4 pl-1 pr-0 position-relative h-100">
+                    <a href="#" class="w-100 h-100">
+                        <img class="w-100 h-100 bg-danger" />
+                        <div class="position-absolute" style="bottom:0;background-color: rgba(58,58,58,0.9)">
+                            <p class="small m-1 text-light">小焦点图标题三</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <!-- Article List -->
+            <div class="row mt-3">
+                <ul class="col-sm-12 d-block">
+                    <li class="row mb-3" style="height: 180px;background-color: white">
+                        <div class="col-sm-4 p-3 h-100">
+                            <a href="#" class="w-100 h-100">
+                                <img class="w-100 h-100 bg-danger" />
+                                <div class="position-absolute mt-3"
+                                    style="top:0;background-color: rgba(32,120,255,0.9)">
+                                    <p class="small m-1 text-light">文章分类标签一</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-8 d-flex flex-column">
+                            <p class="h5 mt-3 border-bottom mb-0 pb-2">
+                                <a href="#" class="text-decoration-none text-dark">文章列表标题一 </a>
+                            </p>
+                            <p class="small mt-2" style="font-size: 95%;">
+                                这里是描述位置，在这里可以简单概括文章内容
+                            </p>
+                            <div class="d-flex flex-row justify-content-between mt-auto">
+                                <p class="font-weight-light small pl-1 mb-3">PeekpaAdmin</p>
+                                <p class="font-weight-light small pr-1 mb-3">阅读(666)</p>
+                                <p class="font-weight-light small pr-1 mb-3">2021-02-01</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="row mb-3" style="height: 180px;background-color: white">
+                        <div class="col-sm-4 p-3 h-100">
+                            <a href="#" class="w-100 h-100">
+                                <img class="w-100 h-100 bg-danger" />
+                                <div class="position-absolute mt-3"
+                                    style="top:0;background-color: rgba(32,120,255,0.9)">
+                                    <p class="small m-1 text-light">文章分类标签二</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-8 d-flex flex-column">
+                            <p class="h5 mt-3 border-bottom mb-0 pb-2">
+                                <a href="#" class="text-decoration-none text-dark">文章列表标题二十二
+                                </a>
+                            </p>
+                            <p class="small mt-2" style="font-size: 95%;">
+                                这里是描述位置，在这里可以简单概括文章内容，超长测试一下。这里是描述位置，在这里可以简单概括文章内容，超长测试一下
+                            </p>
+                            <div class="d-flex flex-row justify-content-between mt-auto">
+                                <p class="font-weight-light small pl-1 mb-3">作者：Peekpa</p>
+                                <p class="font-weight-light small pr-1 mb-3">阅读(0)</p>
+                                <p class="font-weight-light small pr-1 mb-3">2021-12-01</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-</body>
-
-</html>
+        {% include 'post/right_section.html' %}
+    </div>
+</div>
+{% endblock %}
