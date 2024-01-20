@@ -5,111 +5,144 @@ Peekpa
 {% endblock %}
 
 {% block content %}
+{% load time_filters %}
+
 <div class="container mt-4 mb-4">
     <div class="row">
         <div class="col-md-8">
-            <!-- Big Highlight Pic -->
-            <div class="row" style="height: 230px;background-color: white">
+            {% if top_post %}
+            {% if top_post.0 %}
+            <!-- 大焦点图 -->
+            <div class="row mb-2" style="height: 230px;background-color: white">
                 <div class="col-md-7 p-0 h-100">
-                    <a href="#" class="w-100 h-100">
-                        <img class="w-100 h-100 bg-danger" />
+                    <a
+                        href="{% url 'post:detail' time_id=top_post.0.time_id%}"
+                        class="w-100 h-100"
+                    >
+                        <img src="{{ top_post.0.thumbnail }}" class="w-100 h-100" />
                     </a>
                 </div>
-
+            
                 <div class="col-md-5">
                     <p class="h5 mt-3 border-bottom mb-0 pb-2">
-                        <a href="#" class="text-decoration-none text-dark" style="">大焦点图推荐位置标题</a>
+                        <a
+                            href="{% url 'post:detail' time_id=top_post.0.time_id%}"
+                            class="text-decoration-none text-dark"
+                            style=""
+                            >{{ top_post.0.title }}</a
+                        >
                     </p>
                     <div class="d-flex flex-row justify-content-between mt-2">
-                        <p class="font-weight-light small pl-1 ">PeekpaAdmin</p>
-                        <p class="font-weight-light small pr-1">2021-01-11</p>
+                        <p class="font-weight-light small pl-1 ">
+                            {{ top_post.0.author.username }}
+                        </p>
+                        <p class="font-weight-light small pr-1">
+                            {{ top_post.0.publish_time | data_format_y_m_d }}
+                        </p>
                     </div>
-                    <p class="small" style="font-size: 95%;">
-                        这里是描述位置，在这里可以简单概括文章内容
-                    </p>
+                    <p class="small" style="font-size: 95%;">{{ top_post.0.description }}</p>
                 </div>
             </div>
-            <!-- Small Hightlight Pic -->
-            <div class="row mt-2 justify-content-between" style="height: 130px;">
+            {% endif %}
+            
+            <!-- 三小图 -->
+            <div class="row mb-3" style="height: 130px;">
+                {% if top_post.1 %}
+                <!-- 三小图(左) -->
                 <div class="col-sm-4 pl-0 pr-1 position-relative h-100">
-                    <a href="#" class="w-100 h-100">
-                        <img class="w-100 h-100 bg-danger" />
-                        <div class="position-absolute mr-1" style="bottom:0;background-color: rgba(58,58,58,0.9)">
-                            <p class="small m-1 text-light">小焦点图标题一</p>
+                    <a
+                        href="{% url 'post:detail' time_id=top_post.1.time_id%}"
+                        class="w-100 h-100"
+                    >
+                        <img src="{{ top_post.1.thumbnail }}" class="w-100 h-100" />
+                        <div
+                            class="position-absolute mr-1"
+                            style="bottom:0;background-color: rgba(58,58,58,0.9)"
+                        >
+                            <p class="small m-1 text-light">{{ top_post.1.title }}</p>
                         </div>
                     </a>
                 </div>
+                {% endif %}
+                {% if top_post.2 %}
+                <!-- 三小图(中) -->
                 <div class="col-sm-4 pl-1 pr-1 position-relative h-100">
-                    <a href="#" class="w-100 h-100">
-                        <img class="w-100 h-100 bg-danger" />
-                        <div class="position-absolute mr-1" style="bottom:0;background-color: rgba(58,58,58,0.9)">
-                            <p class="small m-1 text-light">
-                                小焦点图标题二超长位置测试小焦点图标题二超长位置测试
-                            </p>
+                    <a
+                        href="{% url 'post:detail' time_id=top_post.2.time_id%}"
+                        class="w-100 h-100"
+                    >
+                        <img src="{{ top_post.2.thumbnail }}" class="w-100 h-100" />
+                        <div
+                            class="position-absolute mr-1"
+                            style="bottom:0;background-color: rgba(58,58,58,0.9)"
+                        >
+                            <p class="small m-1 text-light">{{ top_post.2.title }}</p>
                         </div>
                     </a>
                 </div>
+                {% endif %}
+                {% if top_post.3 %}
+                <!-- 三小图(右) -->
                 <div class="col-sm-4 pl-1 pr-0 position-relative h-100">
-                    <a href="#" class="w-100 h-100">
-                        <img class="w-100 h-100 bg-danger" />
-                        <div class="position-absolute" style="bottom:0;background-color: rgba(58,58,58,0.9)">
-                            <p class="small m-1 text-light">小焦点图标题三</p>
+                    <a
+                        href="{% url 'post:detail' time_id=top_post.3.time_id%}"
+                        class="w-100 h-100"
+                    >
+                        <img src="{{ top_post.3.thumbnail }}" class="w-100 h-100" />
+                        <div
+                            class="position-absolute"
+                            style="bottom:0;background-color: rgba(58,58,58,0.9)"
+                        >
+                            <p class="small m-1 text-light">{{ top_post.3.title }}</p>
                         </div>
                     </a>
                 </div>
+                {% endif %}
             </div>
-            <!-- Article List -->
-            <div class="row mt-3">
+            {% endif %}            
+            <!-- 左侧文章列表 -->
+            <div class="row">
                 <ul class="col-sm-12 d-block">
+                    {% for post in list_post %}
+                    <!-- 文章 -->
                     <li class="row mb-3" style="height: 180px;background-color: white">
                         <div class="col-sm-4 p-3 h-100">
-                            <a href="#" class="w-100 h-100">
-                                <img class="w-100 h-100 bg-danger" />
-                                <div class="position-absolute mt-3"
-                                    style="top:0;background-color: rgba(32,120,255,0.9)">
-                                    <p class="small m-1 text-light">文章分类标签一</p>
+                            <a
+                                href="{% url 'post:detail' time_id=post.time_id %}"
+                                class="w-100 h-100"
+                            >
+                                <img src="{{ post.thumbnail }}" class="w-100 h-100" />
+                                <div
+                                    class="position-absolute mt-3"
+                                    style="top:0;background-color: rgba(32,120,255,0.9)"
+                                >
+                                    <p class="small m-1 text-light">{{ post.category.name }}</p>
                                 </div>
                             </a>
                         </div>
                         <div class="col-sm-8 d-flex flex-column">
                             <p class="h5 mt-3 border-bottom mb-0 pb-2">
-                                <a href="#" class="text-decoration-none text-dark">文章列表标题一 </a>
-                            </p>
-                            <p class="small mt-2" style="font-size: 95%;">
-                                这里是描述位置，在这里可以简单概括文章内容
-                            </p>
-                            <div class="d-flex flex-row justify-content-between mt-auto">
-                                <p class="font-weight-light small pl-1 mb-3">PeekpaAdmin</p>
-                                <p class="font-weight-light small pr-1 mb-3">阅读(666)</p>
-                                <p class="font-weight-light small pr-1 mb-3">2021-02-01</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="row mb-3" style="height: 180px;background-color: white">
-                        <div class="col-sm-4 p-3 h-100">
-                            <a href="#" class="w-100 h-100">
-                                <img class="w-100 h-100 bg-danger" />
-                                <div class="position-absolute mt-3"
-                                    style="top:0;background-color: rgba(32,120,255,0.9)">
-                                    <p class="small m-1 text-light">文章分类标签二</p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-sm-8 d-flex flex-column">
-                            <p class="h5 mt-3 border-bottom mb-0 pb-2">
-                                <a href="#" class="text-decoration-none text-dark">文章列表标题二十二
+                                <a
+                                    href="{% url 'post:detail' time_id=post.time_id %}"
+                                    class="text-decoration-none text-dark"
+                                    >{{ post.title }}
                                 </a>
                             </p>
-                            <p class="small mt-2" style="font-size: 95%;">
-                                这里是描述位置，在这里可以简单概括文章内容，超长测试一下。这里是描述位置，在这里可以简单概括文章内容，超长测试一下
-                            </p>
+                            <p class="small mt-2" style="font-size: 95%;">{{ post.description }}</p>
                             <div class="d-flex flex-row justify-content-between mt-auto">
-                                <p class="font-weight-light small pl-1 mb-3">作者：Peekpa</p>
-                                <p class="font-weight-light small pr-1 mb-3">阅读(0)</p>
-                                <p class="font-weight-light small pr-1 mb-3">2021-12-01</p>
+                                <p class="font-weight-light small pl-1 mb-3">
+                                    {{ post.author.username }}
+                                </p>
+                                <p class="font-weight-light small pr-1 mb-3">
+                                    阅读({{ post.read_num }})
+                                </p>
+                                <p class="font-weight-light small pr-1 mb-3">
+                                    {{ post.publish_time | data_format_y_m_d }}
+                                </p>
                             </div>
                         </div>
                     </li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>
