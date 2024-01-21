@@ -34,4 +34,6 @@ urlpatterns = [
     path("dashboard/advertise/add", AdvertiseView.as_view(), name="advertise_add"),
     path("dashboard/advertise/edit", AdvertiseEditView.as_view(), name="advertise_edit_view"),
     path("dashboard/advertise/delete", AdvertiseDeleteView.as_view(), name="advertise_delete"),
+    # -------------User URLs------------
+    path("dashboard/user/manage", views.user_manage_view, name="user_manage_view"),
 ]

@@ -82,3 +82,13 @@ def advertise_manage_view(request):
 
 def advertise_publish_view(request):
     return render(request, 'cms/advertise/publish.html')
+
+
+'''
+User manage view
+'''
+def user_manage_view(request):
+    context = {
+        "list_data": User.objects.all(),
+    }
+    return render(request, 'cms/user/manage.html', context=context)

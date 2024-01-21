@@ -152,6 +152,33 @@
             </li>
           </ul>
         </li>
+        <!-- User Tab -->
+        {% url 'cms:user_manage_view' as user_manage_view %}
+        <li
+          class="nav-item has-treeview {% if request.path == user_manage_view %}menu-open{% endif %}"
+        >
+          <a
+            href="#"
+            class="nav-link {% if request.path == user_manage_view %}active{% endif %}"
+          >
+            <i class="nav-icon fas fa-user"></i>
+            <p>
+              用户管理
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a
+                href="{% url 'cms:user_manage_view' %}"
+                class="nav-link {% if request.path == user_manage_view %}active{% endif %}"
+              >
+                <i class="far fa-circle nav-icon"></i>
+                <p>用户列表</p>
+              </a>
+            </li>
+          </ul>
+        </li>        
       </ul>
     </nav>
   </div>
