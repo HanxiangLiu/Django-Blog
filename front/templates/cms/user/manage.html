@@ -48,13 +48,15 @@
                                         <a
                                             href="{% url 'cms:user_edit_view' %}?user_id={{ item.uid }}"
                                             class="btn btn-info btn-xs"
-                                        >修改
-                                        </a>
+                                            >修改</a
+                                        >
+                                        {% if not item.is_superuser %}<!-- 新添加修改代码 -->
                                         <a
                                             href="{% url 'cms:user_delete' %}?user_id={{ item.uid }}"
                                             class="btn btn-danger btn-xs"
-                                        >删除
-                                        </a>
+                                            >删除</a
+                                        >
+                                        {% endif %}<!-- 新添加修改代码 -->
                                     </td>
                                 </tr>
                                 {% endfor %}
