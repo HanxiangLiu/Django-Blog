@@ -2,7 +2,7 @@ from django.shortcuts import render
 import markdown
 
 from apps.post.models import Post
-from apps.link.models import Link
+from apps.link.models import Link, Advertise
 
 
 def index(request):
@@ -16,6 +16,7 @@ def index(request):
     }
     context.update(get_read_most_post())
     context.update(get_link())
+    context.update(get_advertise())
     return render(request, 'post/index.html', context=context)
 
 
@@ -28,6 +29,7 @@ def post_list_view(request):
     }
     context.update(get_read_most_post())
     context.update(get_link())
+    context.update(get_advertise())
     return render(request, 'post/list.html', context=context)
 
 
@@ -51,10 +53,8 @@ def detail(request, time_id):
     }
     context.update(get_read_most_post())
     context.update(get_link())
+    context.update(get_advertise())
     return render(request, 'post/detail.html', context=context)
-
-
-
 
 
 # Tool Function
@@ -82,5 +82,13 @@ def get_link():
     links = Link.objects.filter(status=Link.STATUS_NORMAL)
     context = {
         'link_data': links
+    }
+    return context
+
+
+def get_advertise():
+    advertise_link = Advertise.objects.all()[0] if Advertise.objects.all().count() else None
+    context = {
+        'advertise_link': advertise_link
     }
     return context

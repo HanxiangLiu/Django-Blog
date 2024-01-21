@@ -1,11 +1,25 @@
 {% load time_filters %}
 <div class="col-md-4">
-    <!-- Ad Area -->
+    {% if advertise_link %}
+    <!-- 广告 -->
     <div class="row ml-1" style="background-color: white;">
-        <div class="col-sm-12 p-0 text-center">
-            <a href="#"><img src="{% static 'image/ad.png' %}" class="img-fluid" /></a>
-        </div>
+      <div class="col-sm-12 p-0 text-center">
+        <a
+          href="{{ advertise_link.link_url }}"
+          title="{{ advertise_link.title }}"
+          target="_blank"
+          ><img src="{{ advertise_link.image_url }}" class="img-fluid"
+        /></a>
+      </div>
     </div>
+    {% else %}
+    <!-- 广告占位 -->
+    <div class="row ml-1" style="background-color: white;">
+      <div class="col-sm-12 p-0 text-center">
+        <a href="#"><img src="{% static 'image/ad.png' %}" class="img-fluid" /></a>
+      </div>
+    </div>
+    {% endif %}    
     <!-- Hot Articles Area -->
     {% if read_post %}
     <div class="row ml-1 mt-4" style="background-color: white">
