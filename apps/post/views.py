@@ -1,15 +1,7 @@
 from django.shortcuts import render
+import markdown
+
 from apps.post.models import Post
-
-
-def get_read_most_post():
-    read_post = Post.objects.all().order_by("-read_num")
-    if len(read_post) > 5:
-        read_post = read_post[:5]
-    context = {
-        "read_post": read_post
-    }
-    return context
 
 
 def index(request):
@@ -37,4 +29,42 @@ def post_list_view(request):
 
 
 def detail(request, time_id):
-    return render(request, "post/detail.html")
+    post = Post.objects.select_related('category', 'author').get(time_id=time_id)
+    md = markdown.Markdown(
+        extensions=[
+            # 包含 缩写、表格等常用扩展
+            'markdown.extensions.extra',
+            # 语法高亮扩展
+            'markdown.extensions.codehilite',
+            # 目录扩展
+            'markdown.extensions.toc',
+        ]
+    )
+    # post.content_html = md.convert(post.content)
+    md.convert(post.content)
+    context = {
+        'post_data': post,
+        'toc': process_toc(md.toc)
+    }
+    context.update(get_read_most_post())
+    return render(request, 'post/detail.html', context=context)
+
+
+def get_read_most_post():
+    read_post = Post.objects.all().order_by("-read_num")
+    if len(read_post) > 5:
+        read_post = read_post[:5]
+    context = {
+        "read_post": read_post
+    }
+    return context
+
+
+def process_toc(toc):
+    toc = toc.replace('<div class="toc">', '') \
+             .replace('</div>','') \
+             .replace('<ul>','<ul class="list-group">') \
+             .replace('<li>','<li class="border-0 list-group-item ">')
+    if len(toc) <= 31:
+        toc = None
+    return toc
