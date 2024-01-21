@@ -92,3 +92,7 @@ def user_manage_view(request):
         "list_data": User.objects.all(),
     }
     return render(request, 'cms/user/manage.html', context=context)
+
+
+def user_publish_view(request):
+    return render(request, 'cms/user/publish.html')

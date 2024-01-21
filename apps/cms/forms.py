@@ -58,3 +58,17 @@ class AdvertiseEditForm(forms.ModelForm):
     class Meta:
         model = Advertise
         fields = "__all__"
+
+
+# User form
+class UserAddForm(forms.Form):
+    username = forms.CharField()
+    email = forms.EmailField()
+    password = forms.CharField(max_length=20, min_length=6)
+
+
+class UserEditForm(forms.Form):
+    pk = forms.CharField(max_length=100)
+    username = forms.CharField()
+    email = forms.EmailField()
+    password = forms.CharField(max_length=20, min_length=6)
