@@ -2,6 +2,7 @@ from django.shortcuts import render
 import markdown
 
 from apps.post.models import Post
+from apps.link.models import Link
 
 
 def index(request):
@@ -14,6 +15,7 @@ def index(request):
         'list_post': list_post
     }
     context.update(get_read_most_post())
+    context.update(get_link())
     return render(request, 'post/index.html', context=context)
 
 
@@ -25,6 +27,7 @@ def post_list_view(request):
         'list_post': list_post,
     }
     context.update(get_read_most_post())
+    context.update(get_link())
     return render(request, 'post/list.html', context=context)
 
 
@@ -47,9 +50,14 @@ def detail(request, time_id):
         'toc': process_toc(md.toc)
     }
     context.update(get_read_most_post())
+    context.update(get_link())
     return render(request, 'post/detail.html', context=context)
 
 
+
+
+
+# Tool Function
 def get_read_most_post():
     read_post = Post.objects.all().order_by("-read_num")
     if len(read_post) > 5:
@@ -68,3 +76,11 @@ def process_toc(toc):
     if len(toc) <= 31:
         toc = None
     return toc
+
+
+def get_link():
+    links = Link.objects.filter(status=Link.STATUS_NORMAL)
+    context = {
+        'link_data': links
+    }
+    return context
