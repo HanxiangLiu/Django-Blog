@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from apps.post.models import Category, Post
 from apps.bloguser.models import User
+from apps.link.models import Link
 from utils.paginator_helper import get_paginator, get_pagination_data
 
 
@@ -49,3 +50,21 @@ def post_publish_view(request):
         'list_data_status': Post.STATUS_ITEMS
     }
     return render(request, 'cms/post/publish.html', context=context)
+
+
+'''
+Link manage view
+'''
+def link_manage_view(request):
+    context = {
+        "list_data": Link.objects.all(),
+        'list_data_status': Link.STATUS_ITEMS
+    }
+    return render(request, 'cms/link/manage.html', context=context)
+
+
+def link_publish_view(request):
+    context = {
+        'list_data_status': Link.STATUS_ITEMS
+    }
+    return render(request, 'cms/link/publish.html', context=context)

@@ -1,5 +1,6 @@
 from django import forms
 from apps.post.models import Category, Post
+from apps.link.models import Link
 
 
 # Category form
@@ -29,3 +30,17 @@ class PostEditForm(forms.ModelForm):
     class Meta:
         model = Post
         exclude = ('read_num',)
+
+
+# Link form
+class LinkAddForm(forms.ModelForm):
+    class Meta:
+        model = Link
+        fields = "__all__"
+
+
+class LinkEditForm(forms.ModelForm):
+    pk = forms.CharField(max_length=100)
+    class Meta:
+        model = Link
+        fields = "__all__"

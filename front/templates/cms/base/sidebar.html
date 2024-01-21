@@ -78,6 +78,42 @@
             </li>
           </ul>
         </li>
+        <!-- Link Tab -->
+        {% url 'cms:link_manage_view' as link_manage_view %}
+        {% url 'cms:link_publish_view' as link_publish_view %}
+        {% url 'cms:link_edit_view' as link_edit_view %}
+        <li
+          class="nav-item has-treeview {% if request.path == link_manage_view or request.path == link_publish_view or request.path == link_edit_view %}menu-open{% endif %}"
+        >
+          <a 
+            href="#"
+            class="nav-link {% if request.path == link_manage_view or request.path == link_publish_view or request.path == link_edit_view %}active{% endif %}"
+            >
+            <i class="nav-icon fas fa-link"></i>
+            <p>
+              友链管理
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a 
+                href="{% url 'cms:link_manage_view' %}"
+                class="nav-link {% if request.path == link_manage_view %}active{% endif %}"
+                >
+                <i class="far fa-circle nav-icon"></i>
+                <p>友链列表</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'cms:link_publish_view' %}"
+                class="nav-link {% if request.path == link_publish_view %}active{% endif %}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>新建友链</p>
+              </a>
+            </li>
+          </ul>
+        </li>
       </ul>
     </nav>
   </div>
