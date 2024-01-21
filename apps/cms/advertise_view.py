@@ -46,3 +46,10 @@ class AdvertiseEditView(View):
             'item_data': category,
         }
         return render(request, 'cms/advertise/publish.html', context=context)
+
+
+class AdvertiseDeleteView(View):
+    def get(self, request):
+        advertise_id = request.GET.get('advertise_id')
+        Advertise.objects.filter(id=advertise_id).delete()
+        return redirect(reverse("cms:advertise_manage_view"))
