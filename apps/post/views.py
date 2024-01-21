@@ -26,7 +26,14 @@ def index(request):
 
 
 def post_list_view(request):
-    return render(request, "post/list.html")
+    hot_post = Post.objects.filter(status=Post.STATUS_NORMAL, is_hot=True).order_by('time_id')
+    list_post = Post.objects.filter(status=Post.STATUS_NORMAL, is_hot=False).order_by('time_id')
+    context = {
+        'hot_post': hot_post,
+        'list_post': list_post,
+    }
+    context.update(get_read_most_post())
+    return render(request, 'post/list.html', context=context)
 
 
 def detail(request, time_id):
