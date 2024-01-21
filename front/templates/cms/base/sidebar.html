@@ -114,6 +114,44 @@
             </li>
           </ul>
         </li>
+        <!-- Advertise Tab -->
+        {% url 'cms:advertise_manage_view' as advertise_manage_view %}
+        {% url 'cms:advertise_publish_view' as advertise_publish_view %}
+        {% url 'cms:advertise_edit_view' as advertise_edit_view %}
+        <li
+          class="nav-item has-treeview {% if request.path == advertise_manage_view or request.path == advertise_publish_view or request.path == advertise_edit_view %}menu-open{% endif %}"
+        >
+          <a
+            href="#"
+            class="nav-link {% if request.path == advertise_manage_view or request.path == advertise_publish_view or request.path == advertise_edit_view %}active{% endif %}"
+          >
+            <i class="nav-icon fas fa-ad"></i>
+            <p>
+              广告管理
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a
+                href="{% url 'cms:advertise_manage_view' %}"
+                class="nav-link {% if request.path == advertise_manage_view or request.path == advertise_edit_view %}active{% endif %}"
+              >
+                <i class="far fa-circle nav-icon"></i>
+                <p>广告列表</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                href="{% url 'cms:advertise_publish_view' %}"
+                class="nav-link {% if request.path == advertise_publish_view %}active{% endif %}"
+              >
+                <i class="far fa-circle nav-icon"></i>
+                <p>新建广告</p>
+              </a>
+            </li>
+          </ul>
+        </li>
       </ul>
     </nav>
   </div>

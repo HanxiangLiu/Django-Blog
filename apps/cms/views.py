@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from apps.post.models import Category, Post
 from apps.bloguser.models import User
-from apps.link.models import Link
+from apps.link.models import Link, Advertise
 from utils.paginator_helper import get_paginator, get_pagination_data
 
 
@@ -68,3 +68,17 @@ def link_publish_view(request):
         'list_data_status': Link.STATUS_ITEMS
     }
     return render(request, 'cms/link/publish.html', context=context)
+
+
+'''
+Advertise manage view
+'''
+def advertise_manage_view(request):
+    context = {
+        "list_data": Advertise.objects.all()
+    }
+    return render(request, 'cms/advertise/manage.html', context=context)
+
+
+def advertise_publish_view(request):
+    return render(request, 'cms/advertise/publish.html')

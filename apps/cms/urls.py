@@ -3,6 +3,7 @@ from . import views
 from apps.cms.category_view import CategoryView, CategoryEditView, CategoryDeleteView
 from apps.cms.post_view import PostView, PostEditView, PostDeleteView
 from apps.cms.link_view import LinkView, LinkEditView, LinkDeleteView
+from apps.cms.advertise_view import AdvertiseView, AdvertiseEditView
 
 app_name = "cms"
 
@@ -27,4 +28,9 @@ urlpatterns = [
     path("dashboard/link/add", LinkView.as_view(), name="link_add"),
     path("dashboard/link/edit", LinkEditView.as_view(), name="link_edit_view"),
     path("dashboard/link/delete", LinkDeleteView.as_view(), name="link_delete"),
+    # -------------Advertise URLs------------
+    path("dashboard/advertise/manage", views.advertise_manage_view, name="advertise_manage_view"),
+    path("dashboard/advertise/publish", views.advertise_publish_view, name="advertise_publish_view"),
+    path("dashboard/advertise/add", AdvertiseView.as_view(), name="advertise_add"),
+    path("dashboard/advertise/edit", AdvertiseEditView.as_view(), name="advertise_edit_view"),
 ]

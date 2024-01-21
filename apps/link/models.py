@@ -14,3 +14,10 @@ class Link(models.Model):
     url = models.URLField()
     create_time = models.DateTimeField(auto_now_add=True)
     status = models.PositiveIntegerField(default=STATUS_DRAFT, choices=STATUS_ITEMS)
+
+
+class Advertise(models.Model):
+    title = models.CharField(max_length=100)
+    image_url = models.URLField()
+    link_url = models.URLField()
+    create_time = models.DateTimeField(auto_now_add=True)

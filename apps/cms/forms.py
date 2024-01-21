@@ -1,6 +1,6 @@
 from django import forms
 from apps.post.models import Category, Post
-from apps.link.models import Link
+from apps.link.models import Link, Advertise
 
 
 # Category form
@@ -43,4 +43,18 @@ class LinkEditForm(forms.ModelForm):
     pk = forms.CharField(max_length=100)
     class Meta:
         model = Link
+        fields = "__all__"
+
+
+# Advertise form
+class AdvertiseAddForm(forms.ModelForm):
+    class Meta:
+        model = Advertise
+        fields = "__all__"
+
+
+class AdvertiseEditForm(forms.ModelForm):
+    pk = forms.CharField(max_length=100)
+    class Meta:
+        model = Advertise
         fields = "__all__"
