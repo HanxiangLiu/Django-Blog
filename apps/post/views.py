@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.core.cache import cache
+from django.db.models import F
 import markdown
 
 from apps.post.models import Post
@@ -54,6 +56,7 @@ def detail(request, time_id):
     context.update(get_read_most_post())
     context.update(get_link())
     context.update(get_advertise())
+    handle_visited_num(request, time_id)
     return render(request, 'post/detail.html', context=context)
 
 
@@ -92,3 +95,14 @@ def get_advertise():
         'advertise_link': advertise_link
     }
     return context
+
+
+def handle_visited_num(request, time_id):
+    increase_post_view = False
+    uid = request.uid
+    pv_key = 'pv:%s:%s' % (uid, request.path)
+    if not cache.get(pv_key):
+        increase_post_view = True
+        cache.set(pv_key, 1, 2 * 60)
+    if increase_post_view:
+        Post.objects.filter(time_id=time_id).update(read_num=F('read_num') + 1)
