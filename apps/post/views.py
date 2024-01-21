@@ -5,8 +5,10 @@ import markdown
 
 from apps.post.models import Post
 from apps.link.models import Link, Advertise
+from apps.bloguser.tracking import peekpa_tracking
 
 
+@peekpa_tracking
 def index(request):
     top_post = Post.objects.filter(status=Post.STATUS_NORMAL, priority__gt=0).order_by('-priority')
     if len(top_post) > 4:
@@ -22,6 +24,7 @@ def index(request):
     return render(request, 'post/index.html', context=context)
 
 
+@peekpa_tracking
 def post_list_view(request):
     hot_post = Post.objects.filter(status=Post.STATUS_NORMAL, is_hot=True).order_by('time_id')
     list_post = Post.objects.filter(status=Post.STATUS_NORMAL, is_hot=False).order_by('time_id')
@@ -35,6 +38,7 @@ def post_list_view(request):
     return render(request, 'post/list.html', context=context)
 
 
+@peekpa_tracking
 def detail(request, time_id):
     post = Post.objects.select_related('category', 'author').get(time_id=time_id)
     md = markdown.Markdown(
