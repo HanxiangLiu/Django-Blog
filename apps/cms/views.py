@@ -1,16 +1,45 @@
+import datetime
 from django.shortcuts import render
+
 from apps.post.models import Category, Post
 from apps.bloguser.models import User
 from apps.link.models import Link, Advertise
+from apps.bloguser.models import User, UserVisit, DailyVisitNum, TotalVisitNum
 from utils.paginator_helper import get_paginator, get_pagination_data
 
 
+'''
+Dashboard view
+'''
 def cms_login(request):
     return render(request, "cms/login.html")
 
 
 def cms_dashboard(request):
-    return render(request, "cms/dashboard/home.html")
+    context = {}
+    context.update(get_dashboard_top_data())
+    return render(request, 'cms/dashboard/home.html', context=context)
+
+
+def get_dashboard_top_data():
+    post_num = Post.objects.all().count()
+    cur_date = datetime.datetime.now().strftime('%Y-%m-%d')
+    day_visit_ip_set = set()
+    day_visit_ip_list = UserVisit.objects.filter(day=cur_date)
+    if day_visit_ip_list:
+        for user_ip_item in day_visit_ip_list:
+            if user_ip_item.ip_address not in day_visit_ip_set:
+                day_visit_ip_set.add(user_ip_item.ip_address)
+    day_visit_ip_num = len(day_visit_ip_set)
+    day_visit_num = DailyVisitNum.objects.filter(day=cur_date)[0].count if DailyVisitNum.objects.filter(day=cur_date).count() else 0
+    total_visit_num = TotalVisitNum.objects.all()[0].count if TotalVisitNum.objects.all().count() else 0
+    context = {
+        "post_num": post_num,
+        "day_visit_ip_num": day_visit_ip_num,
+        "day_visit_num": day_visit_num,
+        "total_visit_num": total_visit_num
+    }
+    return context
 
 
 '''
