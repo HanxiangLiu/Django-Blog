@@ -10,6 +10,7 @@ from django.urls import reverse
 from apps.cms.forms import PostAddForm, PostEditForm
 from apps.bloguser.models import User
 from apps.post.models import Category, Post
+from apps.post.cache_manager import clear_cache
 
 
 @method_decorator(login_required, name='post')
@@ -41,6 +42,8 @@ class PostView(View):
                     is_hot=is_hot,
                     time_id=time_id,
                 )
+                clear_cache('post:index')  # 新添加删除首页缓存
+                clear_cache('post:post_list') # 新添加删除文章列表缓存
                 return redirect(reverse("cms:post_manage_view"))
             else:
                 return HttpResponse(content=json.dumps(form.errors.get_json_data()))
@@ -84,6 +87,9 @@ class PostView(View):
                     time_id=time_id,
                     content_html=content_html,
                 )
+                clear_cache('post:index')  # 新添加删除首页缓存
+                clear_cache('post:post_list') # 新添加删除文章列表缓存
+                clear_cache('/detail/{}/'.format(time_id)) # 新添加删除文章详情页缓存
                 return redirect(reverse("cms:post_manage_view"))
             else:
                 return HttpResponse(content=json.dumps(form.errors.get_json_data()))
@@ -114,4 +120,7 @@ class PostDeleteView(View):
     def get(self, request):
         post_id = request.GET.get('post_id')
         Post.objects.filter(pk=post_id).update(status=Post.STATUS_DELETE)
+        clear_cache('post:index')  # 新添加删除首页缓存
+        clear_cache('post:post_list') # 新添加删除文章列表缓存
+        clear_cache('/detail/{}/'.format(post_id)) # 新添加删除文章详情页缓存
         return redirect(reverse("cms:post_manage_view"))

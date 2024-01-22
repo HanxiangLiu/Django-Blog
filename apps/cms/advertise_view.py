@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.urls import reverse
 
+from apps.post.cache_manager import clear_cache
 from apps.cms.forms import AdvertiseAddForm, AdvertiseEditForm
 from apps.link.models import Link
 from apps.link.models import Advertise
@@ -20,6 +21,8 @@ class AdvertiseView(View):
                 image_url = form.cleaned_data.get('image_url')
                 link_url = form.cleaned_data.get('link_url')
                 Advertise.objects.create(title=title, image_url=image_url, link_url=link_url)
+                clear_cache('post:index')  # 新添加删除首页缓存
+                clear_cache('post:post_list') # 新添加删除文章列表缓存
                 return redirect(reverse("cms:advertise_manage_view"))
             else:
                 return redirect(reverse("cms:advertise_publish_view"))
@@ -33,6 +36,8 @@ class AdvertiseView(View):
                 link_url = form.cleaned_data.get('link_url')
                 instance = Advertise.objects.filter(id=pk)
                 instance.update(title=title, image_url=image_url, link_url=link_url)
+                clear_cache('post:index')  # 新添加删除首页缓存
+                clear_cache('post:post_list') # 新添加删除文章列表缓存
                 return redirect(reverse("cms:advertise_manage_view"))
             else:
                 return redirect(reverse("cms:advertise_manage_view"))
@@ -60,4 +65,6 @@ class AdvertiseDeleteView(View):
     def get(self, request):
         advertise_id = request.GET.get('advertise_id')
         Advertise.objects.filter(id=advertise_id).delete()
+        clear_cache('post:index')  # 新添加删除首页缓存
+        clear_cache('post:post_list') # 新添加删除文章列表缓存
         return redirect(reverse("cms:advertise_manage_view"))

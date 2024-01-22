@@ -13,3 +13,7 @@ def get_data_from_cache(request, page_func, redis_key=None, expire=60 * 60, **kw
     except:
         list_data = page_func(**kwargs)
     return list_data
+
+
+def clear_cache(redis_key):
+    cache.delete(redis_key)
