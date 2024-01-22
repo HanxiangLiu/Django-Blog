@@ -4,12 +4,19 @@ from django.db.models import F
 import markdown
 
 from apps.post.models import Post
+from apps.post.cache_manager import get_data_from_cache
 from apps.link.models import Link, Advertise
 from apps.bloguser.tracking import peekpa_tracking
 
 
 @peekpa_tracking
 def index(request):
+    context = get_data_from_cache(request, get_index_data, redis_key="post:index") # 读取缓存数据
+    context.update(get_read_most_post())
+    return render(request, 'post/index.html', context=context)
+
+
+def get_index_data():
     top_post = Post.objects.filter(status=Post.STATUS_NORMAL, priority__gt=0).order_by('-priority')
     if len(top_post) > 4:
         top_post = top_post[:4]
@@ -18,50 +25,55 @@ def index(request):
         'top_post': top_post,
         'list_post': list_post
     }
-    context.update(get_read_most_post())
     context.update(get_link())
     context.update(get_advertise())
-    return render(request, 'post/index.html', context=context)
+    return context
 
 
 @peekpa_tracking
 def post_list_view(request):
+    context = get_data_from_cache(request, get_post_list_data, redis_key="post:post_list")
+    context.update(get_read_most_post())
+    return render(request, 'post/list.html', context=context)
+
+
+def get_post_list_data():
     hot_post = Post.objects.filter(status=Post.STATUS_NORMAL, is_hot=True).order_by('time_id')
     list_post = Post.objects.filter(status=Post.STATUS_NORMAL, is_hot=False).order_by('time_id')
     context = {
         'hot_post': hot_post,
         'list_post': list_post,
     }
-    context.update(get_read_most_post())
     context.update(get_link())
     context.update(get_advertise())
-    return render(request, 'post/list.html', context=context)
+    return context
 
 
 @peekpa_tracking
 def detail(request, time_id):
+    context = get_data_from_cache(request, get_detail_data, time_id=time_id)
+    context.update(get_read_most_post())
+    handle_visited_num(request, time_id)
+    return render(request, 'post/detail.html', context=context)
+
+
+def get_detail_data(time_id):
     post = Post.objects.select_related('category', 'author').get(time_id=time_id)
     md = markdown.Markdown(
         extensions=[
-            # 包含 缩写、表格等常用扩展
             'markdown.extensions.extra',
-            # 语法高亮扩展
             'markdown.extensions.codehilite',
-            # 目录扩展
             'markdown.extensions.toc',
         ]
     )
-    # post.content_html = md.convert(post.content)
     md.convert(post.content)
     context = {
         'post_data': post,
         'toc': process_toc(md.toc)
     }
-    context.update(get_read_most_post())
     context.update(get_link())
     context.update(get_advertise())
-    handle_visited_num(request, time_id)
-    return render(request, 'post/detail.html', context=context)
+    return context
 
 
 # Tool Function
