@@ -21,6 +21,7 @@ def cms_dashboard(request):
     context.update(get_dashboard_visitor_chart())
     context.update(get_advertise())
     context.update(get_visitor_table(10))
+    context.update(get_post_table(10))
     return render(request, 'cms/dashboard/home.html', context=context)
 
 
@@ -97,6 +98,34 @@ def get_visitor_table(max_num):
         visitor_data = visitor_data[:max_num]
     context = {
         'visitor_data_list': visitor_data,
+    }
+    return context
+
+
+def get_post_table(max_num):
+    visitor_day_data = UserVisit.objects.filter(day=datetime.datetime.now().strftime('%Y-%m-%d'), end_point__contains='/detail/')
+    post_map = {}
+    post_view_table_list = []
+    if visitor_day_data:
+        for item in visitor_day_data:
+            post_id = item.end_point.split('/')[2]
+            if post_id in post_map:
+                post_map[post_id] += 1
+            else:
+                post_map[post_id] = 1
+    if post_map:
+        for key in post_map:
+            key = key
+            post_item = Post.objects.filter(time_id=key)
+            if post_item:
+                post_item[0].inscrease = post_map[key]
+                post_view_table_list.append(post_item[0])
+    if post_view_table_list:
+        post_view_table_list.sort(key=lambda x: x.inscrease, reverse=True)
+    if max_num > 0 and len(post_view_table_list) > max_num:
+        post_view_table_list = post_view_table_list[:max_num]
+    context = {
+        'post_view_table_list': post_view_table_list,
     }
     return context
 
