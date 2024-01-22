@@ -20,6 +20,7 @@ def cms_dashboard(request):
     context.update(get_dashboard_top_data())
     context.update(get_dashboard_visitor_chart())
     context.update(get_advertise())
+    context.update(get_visitor_table(10))
     return render(request, 'cms/dashboard/home.html', context=context)
 
 
@@ -86,6 +87,16 @@ def get_advertise():
     advertise_link = Advertise.objects.all()[0] if Advertise.objects.all().count() else None
     context = {
         'advertise_link': advertise_link
+    }
+    return context
+
+
+def get_visitor_table(max_num):
+    visitor_data = UserVisit.objects.all().order_by('-day')
+    if len(visitor_data):
+        visitor_data = visitor_data[:max_num]
+    context = {
+        'visitor_data_list': visitor_data,
     }
     return context
 
