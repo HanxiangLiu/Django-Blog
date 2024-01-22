@@ -1,12 +1,15 @@
 from django.shortcuts import redirect, render
-from django.urls import reverse
 from django.views.generic import View
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.urls import reverse
 
 from apps.cms.forms import LinkAddForm
 from apps.cms.forms import LinkEditForm
 from apps.link.models import Link
 
 
+@method_decorator(login_required, name='post')
 class LinkView(View):
     def post(self, request):
         # 新建提交
@@ -43,6 +46,7 @@ class LinkView(View):
             return redirect(reverse("cms:link_publish_view"))
 
 
+@method_decorator(login_required, name='get')
 class LinkEditView(View):
     def get(self, request):
         link_id = request.GET.get('link_id')
@@ -54,6 +58,7 @@ class LinkEditView(View):
         return render(request, 'cms/link/publish.html', context=context)
 
 
+@method_decorator(login_required, name='get')
 class LinkDeleteView(View):
     def get(self, request):
         link_id = request.GET.get('link_id')

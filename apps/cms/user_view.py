@@ -1,11 +1,14 @@
 from django.shortcuts import redirect, render
-from django.urls import reverse
 from django.views.generic import View
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.urls import reverse
 
 from apps.bloguser.models import User
 from apps.cms.forms import UserAddForm, UserEditForm
 
 
+@method_decorator(login_required, name='post')
 class UserView(View):
     def post(self, request):
         # 新建提交
@@ -39,6 +42,7 @@ class UserView(View):
             return redirect(reverse("cms:user_publish_view"))
 
 
+@method_decorator(login_required, name='get')
 class UserEditView(View):
     def get(self, request):
         user_id = request.GET.get('user_id')
@@ -49,6 +53,7 @@ class UserEditView(View):
         return render(request, 'cms/user/publish.html', context=context)
     
 
+@method_decorator(login_required, name='get')
 class UserDeleteView(View):
     def get(self, request):
         user_id = request.GET.get('user_id')

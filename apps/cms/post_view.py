@@ -1,15 +1,18 @@
 import json
 import markdown
 from django.shortcuts import redirect, render
-from django.urls import reverse
 from django.views.generic import View
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.urls import reverse
 
 from apps.cms.forms import PostAddForm, PostEditForm
 from apps.bloguser.models import User
 from apps.post.models import Category, Post
 
 
+@method_decorator(login_required, name='post')
 class PostView(View):
     def post(self, request):
         # 新建提交
@@ -92,6 +95,7 @@ class PostView(View):
             return redirect(reverse("cms:post_publish_view"))
 
 
+@method_decorator(login_required, name='get')
 class PostEditView(View):
     def get(self, request):
         post_id = request.GET.get('post_id')
@@ -105,6 +109,7 @@ class PostEditView(View):
         return render(request, 'cms/post/publish.html', context=context)
 
 
+@method_decorator(login_required, name='get')
 class PostDeleteView(View):
     def get(self, request):
         post_id = request.GET.get('post_id')

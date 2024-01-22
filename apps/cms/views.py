@@ -1,5 +1,6 @@
 import datetime
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 from apps.post.models import Category, Post
 from apps.bloguser.models import User
@@ -15,6 +16,7 @@ def cms_login(request):
     return render(request, "cms/login.html")
 
 
+@login_required
 def cms_dashboard(request):
     context = {}
     context.update(get_dashboard_top_data())
@@ -133,6 +135,7 @@ def get_post_table(max_num):
 '''
 Category manage view
 '''
+@login_required
 def category_manage_view(request):
     context = {
         "list_data": Category.objects.all()
@@ -140,6 +143,7 @@ def category_manage_view(request):
     return render(request, "cms/category/manage.html", context=context)
 
 
+@login_required
 def category_publish_view(request):
     return render(request, "cms/category/publish.html")
 
@@ -147,6 +151,7 @@ def category_publish_view(request):
 '''
 Post manage view
 '''
+@login_required
 def post_manage_view(request):
     page = int(request.GET.get('p', 1))
     posts = Post.objects.all()
@@ -160,6 +165,7 @@ def post_manage_view(request):
     return render(request, 'cms/post/manage.html', context=context)
 
 
+@login_required
 def post_publish_view(request):
     context = {
         'list_data_category': Category.objects.all(),
@@ -172,6 +178,7 @@ def post_publish_view(request):
 '''
 Link manage view
 '''
+@login_required
 def link_manage_view(request):
     context = {
         "list_data": Link.objects.all(),
@@ -180,6 +187,7 @@ def link_manage_view(request):
     return render(request, 'cms/link/manage.html', context=context)
 
 
+@login_required
 def link_publish_view(request):
     context = {
         'list_data_status': Link.STATUS_ITEMS
@@ -190,6 +198,7 @@ def link_publish_view(request):
 '''
 Advertise manage view
 '''
+@login_required
 def advertise_manage_view(request):
     context = {
         "list_data": Advertise.objects.all()
@@ -197,6 +206,7 @@ def advertise_manage_view(request):
     return render(request, 'cms/advertise/manage.html', context=context)
 
 
+@login_required
 def advertise_publish_view(request):
     return render(request, 'cms/advertise/publish.html')
 
@@ -204,6 +214,7 @@ def advertise_publish_view(request):
 '''
 User manage view
 '''
+@login_required
 def user_manage_view(request):
     context = {
         "list_data": User.objects.all(),
@@ -211,5 +222,6 @@ def user_manage_view(request):
     return render(request, 'cms/user/manage.html', context=context)
 
 
+@login_required
 def user_publish_view(request):
     return render(request, 'cms/user/publish.html')

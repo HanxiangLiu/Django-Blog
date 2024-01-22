@@ -28,6 +28,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+# Login URL
+LOGIN_URL = '/cms/login/'
+
 
 # Application definition
 

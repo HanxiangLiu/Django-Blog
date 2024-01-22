@@ -1,12 +1,14 @@
-from django.shortcuts import redirect
-from django.urls import reverse
-from django.views.generic import View
 from django.shortcuts import redirect, render
+from django.views.generic import View
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.urls import reverse
 
 from apps.cms.forms import CategoryAddForm, CategoryEditForm
 from apps.post.models import Category
 
 
+@method_decorator(login_required, name='post')
 class CategoryView(View):
     def post(self, request):
         # 新建提交
@@ -36,6 +38,7 @@ class CategoryView(View):
             return redirect(reverse("cms:category_publish_view"))
 
 
+@method_decorator(login_required, name='get')
 class CategoryEditView(View):
     def get(self, request):
         category_id = request.GET.get("category_id")
@@ -46,6 +49,7 @@ class CategoryEditView(View):
         return render(request, "cms/category/publish.html", context=context)
 
 
+@method_decorator(login_required, name='get')
 class CategoryDeleteView(View):
     def get(self,request):
         category_id = request.GET.get('category_id')

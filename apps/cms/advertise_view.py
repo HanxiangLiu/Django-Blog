@@ -1,10 +1,15 @@
 from django.shortcuts import redirect, render
+from django.views.generic import View
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.urls import reverse
+
 from apps.cms.forms import AdvertiseAddForm, AdvertiseEditForm
 from apps.link.models import Link
 from apps.link.models import Advertise
-from django.views.generic import View
 
+
+@method_decorator(login_required, name='post')
 class AdvertiseView(View):
     def post(self, request):
         # 新建提交
@@ -38,6 +43,8 @@ class AdvertiseView(View):
         else:
             return redirect(reverse("cms:advertise_publish_view"))
 
+
+@method_decorator(login_required, name='get')
 class AdvertiseEditView(View):
     def get(self,request):
         advertise_id = request.GET.get('advertise_id')
@@ -48,6 +55,7 @@ class AdvertiseEditView(View):
         return render(request, 'cms/advertise/publish.html', context=context)
 
 
+@method_decorator(login_required, name='get')
 class AdvertiseDeleteView(View):
     def get(self, request):
         advertise_id = request.GET.get('advertise_id')
