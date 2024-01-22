@@ -18,6 +18,7 @@ def cms_login(request):
 def cms_dashboard(request):
     context = {}
     context.update(get_dashboard_top_data())
+    context.update(get_dashboard_visitor_chart())
     return render(request, 'cms/dashboard/home.html', context=context)
 
 
@@ -40,6 +41,44 @@ def get_dashboard_top_data():
         "total_visit_num": total_visit_num
     }
     return context
+
+
+def get_dashboard_visitor_chart():
+    this_week_visit_list = []
+    last_week_visit_list = []
+    max_num = 0
+    week_total_num = 0
+    cur_day_in_week = datetime.datetime.today().weekday()
+    for index in range(cur_day_in_week, -1, -1):
+        day_format_string = get_before_date(index)
+        day_visit_num = 0
+        daynumber_item = DailyVisitNum.objects.filter(day=day_format_string)
+        if daynumber_item:
+            day_visit_num = daynumber_item[0].count
+        this_week_visit_list.append(day_visit_num)
+        week_total_num += day_visit_num
+        max_num = day_visit_num if day_visit_num > max_num else max_num
+    for index in range(cur_day_in_week + 7, cur_day_in_week, -1):
+        day_format_string = get_before_date(index)
+        day_visit_num = 0
+        daynumber_item = DailyVisitNum.objects.filter(day=day_format_string)
+        if daynumber_item:
+            day_visit_num = daynumber_item[0].count
+        last_week_visit_list.append(day_visit_num)
+    max_num = 50 if max_num < 50 else max_num
+    context = {
+        'visit_week_total_number': week_total_num,
+        'this_week_data_list': this_week_visit_list,
+        'last_week_data_list': last_week_visit_list,
+        'suggested_max': max_num
+    }
+    return context
+
+def get_before_date(day):
+    today = datetime.datetime.now()
+    offset = datetime.timedelta(days=-day)
+    re_date = (today + offset).strftime("%Y-%m-%d")
+    return re_date
 
 
 '''

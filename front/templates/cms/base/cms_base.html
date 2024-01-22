@@ -6,6 +6,10 @@
     <title>Peekpa | CMS | {% block title %}{% endblock %}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- jQuery -->
+    <script src="{% static 'adminlte/plugins/jquery/jquery.min.js' %}"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="{% static 'adminlte/plugins/jquery-ui/jquery-ui.min.js' %}"></script>    
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{% static 'adminlte/plugins/fontawesome-free/css/all.min.css' %}" />
     <!-- Ionicons -->
@@ -39,10 +43,6 @@
         <div class="content-wrapper">{% block content %} {% endblock %}</div>
     </div>
 
-    <!-- jQuery -->
-    <script src="{% static 'adminlte/plugins/jquery/jquery.min.js' %}"></script>
-    <!-- jQuery UI 1.11.4 -->
-    <script src="{% static 'adminlte/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
         $.widget.bridge("uibutton", $.ui.button);
