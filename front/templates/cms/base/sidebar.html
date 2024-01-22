@@ -153,6 +153,7 @@
           </ul>
         </li>
         <!-- User Tab -->
+        {% if request.user.is_superuser %}
         {% url 'cms:user_manage_view' as user_manage_view %}
         {% url 'cms:user_publish_view' as user_publish_view %}
         {% url 'cms:user_edit_view' as user_edit_view%}
@@ -189,7 +190,8 @@
               </a>
             </li>
           </ul>
-        </li>            
+        </li>
+        {% endif %}            
       </ul>
     </nav>
   </div>
