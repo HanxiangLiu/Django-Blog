@@ -1,5 +1,5 @@
 import datetime
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 
 from apps.post.models import Category, Post
@@ -13,7 +13,9 @@ from utils.paginator_helper import get_paginator, get_pagination_data
 Dashboard view
 '''
 def cms_login(request):
-    return render(request, "cms/login.html")
+    if request.user.is_authenticated:
+        return redirect(reverse('cms:dashboard'))
+    return render(request, 'cms/login.html')
 
 
 @login_required
