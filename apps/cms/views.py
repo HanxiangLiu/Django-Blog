@@ -19,6 +19,7 @@ def cms_dashboard(request):
     context = {}
     context.update(get_dashboard_top_data())
     context.update(get_dashboard_visitor_chart())
+    context.update(get_advertise())
     return render(request, 'cms/dashboard/home.html', context=context)
 
 
@@ -79,6 +80,14 @@ def get_before_date(day):
     offset = datetime.timedelta(days=-day)
     re_date = (today + offset).strftime("%Y-%m-%d")
     return re_date
+
+
+def get_advertise():
+    advertise_link = Advertise.objects.all()[0] if Advertise.objects.all().count() else None
+    context = {
+        'advertise_link': advertise_link
+    }
+    return context
 
 
 '''
