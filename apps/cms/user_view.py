@@ -5,10 +5,12 @@ from django.utils.decorators import method_decorator
 from django.urls import reverse
 
 from apps.bloguser.models import User
+from apps.bloguser.decorators import peekpa_login_superuser_required
 from apps.cms.forms import UserAddForm, UserEditForm
 
 
 @method_decorator(login_required, name='post')
+@method_decorator(peekpa_login_superuser_required, name='post')
 class UserView(View):
     def post(self, request):
         # 新建提交
@@ -43,6 +45,7 @@ class UserView(View):
 
 
 @method_decorator(login_required, name='get')
+@method_decorator(peekpa_login_superuser_required, name='get')
 class UserEditView(View):
     def get(self, request):
         user_id = request.GET.get('user_id')
@@ -54,6 +57,7 @@ class UserEditView(View):
     
 
 @method_decorator(login_required, name='get')
+@method_decorator(peekpa_login_superuser_required, name='get')
 class UserDeleteView(View):
     def get(self, request):
         user_id = request.GET.get('user_id')

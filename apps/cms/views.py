@@ -3,9 +3,9 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
 from apps.post.models import Category, Post
-from apps.bloguser.models import User
 from apps.link.models import Link, Advertise
 from apps.bloguser.models import User, UserVisit, DailyVisitNum, TotalVisitNum
+from apps.bloguser.decorators import peekpa_login_superuser_required
 from utils.paginator_helper import get_paginator, get_pagination_data
 
 
@@ -215,6 +215,7 @@ def advertise_publish_view(request):
 User manage view
 '''
 @login_required
+@peekpa_login_superuser_required
 def user_manage_view(request):
     context = {
         "list_data": User.objects.all(),
@@ -223,5 +224,6 @@ def user_manage_view(request):
 
 
 @login_required
+@peekpa_login_superuser_required
 def user_publish_view(request):
     return render(request, 'cms/user/publish.html')
