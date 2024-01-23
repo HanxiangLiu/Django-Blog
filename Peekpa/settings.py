@@ -89,10 +89,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',   # Django 的数据库引擎
         'NAME': 'peekpa_db1',                   # 项目需要使用的数据库名称
-        'USER': 'root',                         # root 账户
-        'PASSWORD': '',                         # 实验楼环境中，root 账号没有密码
-        'HOST': '127.0.0.1',                    # MySQL 数据库的主机地址
-        'PORT': '3306',                         # MySQL 数据库的端口号
+        'USER': 'moyinqianmo',                  # 账户
+        'PASSWORD': '12345678',                 # 账号密码
+        'HOST': '/var/run/mysqld/mysqld.sock',  # MySQL 数据库的地址
+        'PORT': '',                             # MySQL 数据库的端口号
     }
 }
 
